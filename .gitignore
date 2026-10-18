@@ -1,0 +1,27 @@
+# Temporary files (cache, pids, sockets, etc.)
+/tmp/*
+!/tmp/.keep
+
+# Logs
+/log/*
+!/log/.keep
+
+# Local storage and SQLite databases
+/storage/*
+!/storage/.keep
+/db/*.sqlite3
+/db/*.sqlite3-*
+
+# Secrets — never commit the master key
+/config/master.key
+/.env*
+
+# Bundler
+/.bundle
+/vendor/bundle
+
+# Precompiled assets
+/public/assets
+
+# OS / editor files
+.DS_Store
