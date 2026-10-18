@@ -1,12 +1,13 @@
 class MoviesController < ApplicationController
-  SORTABLE_COLUMNS = %w[ title rating release_date ].freeze
-
   before_action :set_movie, only: %i[ show edit update destroy ]
   helper_method :sort_column, :sort_direction
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.order(sort_column => sort_direction, id: :asc)
+    # Remember the sort so it is kept after visiting other pages.
+    session[:sort] = sort_column
+    session[:direction] = sort_direction
+    @movies = Movie.sorted_by(sort_column, sort_direction)
   end
 
   # GET /movies/1 or /movies/1.json
@@ -66,13 +67,16 @@ class MoviesController < ApplicationController
       @movie = Movie.find(params.expect(:id))
     end
 
-    # Only whitelisted columns can be sorted on, so params can't inject SQL.
+    # The sort comes from the URL when the user clicks a column header,
+    # otherwise from the session (the last sort they chose).
     def sort_column
-      SORTABLE_COLUMNS.include?(params[:sort]) ? params[:sort] : "title"
+      column = params[:sort] || session[:sort]
+      Movie::SORTABLE_COLUMNS.include?(column) ? column : "title"
     end
 
     def sort_direction
-      %w[ asc desc ].include?(params[:direction]) ? params[:direction] : "asc"
+      direction = params[:direction] || session[:direction]
+      Movie::SORT_DIRECTIONS.include?(direction) ? direction : "asc"
     end
 
     # Only allow a list of trusted parameters through.

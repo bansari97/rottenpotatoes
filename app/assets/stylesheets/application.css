@@ -11,6 +11,10 @@
   --accent: #4f46e5;
   --accent-hover: #4338ca;
   --accent-soft: #eef0ff;
+  --asc: #4f46e5;
+  --asc-soft: #eef0ff;
+  --desc: #c2410c;
+  --desc-soft: #ffedd5;
   --danger: #dc2626;
   --danger-soft: #fef2f2;
   --success: #15803d;
@@ -29,6 +33,10 @@
     --accent: #818cf8;
     --accent-hover: #a5b4fc;
     --accent-soft: #1e1b3a;
+    --asc: #818cf8;
+    --asc-soft: #1e1b3a;
+    --desc: #fb923c;
+    --desc-soft: #2b1a0e;
     --danger: #f87171;
     --danger-soft: #2a1415;
     --success: #4ade80;
@@ -306,18 +314,63 @@ h1 {
   opacity: 0.35;
 }
 
-/* The currently sorted column: accent header, arrow, and tinted cells. */
-.movies-table thead th.sorted {
-  color: var(--accent);
-  background: var(--accent-soft);
-}
-
+/*
+ * The currently sorted column is highlighted. Ascending sorts use indigo,
+ * descending sorts use orange, and the header also shows an arrow.
+ */
 .movies-table th.sorted .sort-indicator {
   opacity: 1;
 }
 
-.movies-table td.sorted {
-  background: var(--accent-soft);
+.movies-table thead th.sorted-asc {
+  color: var(--asc);
+  background: var(--asc-soft);
+}
+
+.movies-table td.sorted-asc {
+  background: var(--asc-soft);
+}
+
+.movies-table thead th.sorted-desc {
+  color: var(--desc);
+  background: var(--desc-soft);
+}
+
+.movies-table td.sorted-desc {
+  background: var(--desc-soft);
+}
+
+.movies-table tfoot td {
+  border-bottom: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.table-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+}
+
+.sort-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.sort-summary-asc .swatch {
+  background: var(--asc);
+}
+
+.sort-summary-desc .swatch {
+  background: var(--desc);
 }
 
 .movies-table .actions {

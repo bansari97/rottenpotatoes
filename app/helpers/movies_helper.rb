@@ -6,23 +6,34 @@ module MoviesHelper
   def sortable_header(column, label)
     sorted = column == sort_column
     direction = sorted && sort_direction == "asc" ? "desc" : "asc"
+
+    # The arrow is a visual cue; the hidden text lets screen readers
+    # announce the sort without relying on color.
     indicator = if sorted
-      sort_direction == "asc" ? "↑" : "↓"
+      safe_join([
+        tag.span(sort_direction == "asc" ? "↑" : "↓", class: "sort-indicator", "aria-hidden": true),
+        tag.span("(sorted #{sort_direction_label})", class: "visually-hidden")
+      ])
     else
-      "↕"
+      tag.span("↕", class: "sort-indicator", "aria-hidden": true)
     end
 
-    tag.th(scope: "col", class: ("sorted" if sorted),
-           "aria-sort": (sorted ? "#{sort_direction}ending" : "none")) do
+    tag.th(scope: "col", class: sorted_class(column),
+           "aria-sort": (sorted ? sort_direction_label : "none")) do
       link_to movies_path(sort: column, direction: direction), class: "sort-link" do
-        safe_join([ label, " ", tag.span(indicator, class: "sort-indicator", "aria-hidden": true) ])
+        safe_join([ label, " ", indicator ])
       end
     end
   end
 
-  # Adds the "sorted" class to table cells in the currently sorted column.
+  # Classes for the currently sorted column. The direction class gives
+  # ascending and descending sorts different highlight colors.
   def sorted_class(column)
-    "sorted" if column == sort_column
+    "sorted sorted-#{sort_direction}" if column == sort_column
+  end
+
+  def sort_direction_label
+    sort_direction == "asc" ? "ascending" : "descending"
   end
 
   def formatted_release_date(movie)

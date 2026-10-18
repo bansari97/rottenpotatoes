@@ -3,14 +3,14 @@
 <div class="page-header">
   <div>
     <h1>Movies</h1>
-    <p class="subtitle"><%= pluralize(@movies.size, "movie") %> · click a column to sort</p>
+    <p class="subtitle">Click a column heading to sort. Click it again to reverse the order.</p>
   </div>
   <%= link_to "Add movie", new_movie_path, class: "button" %>
 </div>
 
 <div class="table-wrap">
   <table class="movies-table" id="movies">
-    <caption class="visually-hidden">Movies, sorted by <%= sort_column.humanize.downcase %> (<%= sort_direction %>ending)</caption>
+    <caption class="visually-hidden">Movies, sorted by <%= sort_column.humanize.downcase %> (<%= sort_direction_label %>)</caption>
     <thead>
       <tr>
         <%= sortable_header "title", "Title" %>
@@ -34,5 +34,18 @@
         </tr>
       <% end %>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          <div class="table-footer">
+            <span><%= pluralize(@movies.size, "movie") %></span>
+            <span class="sort-summary sort-summary-<%= sort_direction %>">
+              <span class="swatch" aria-hidden="true"></span>
+              Sorted by <%= sort_column.humanize.downcase %>, <%= sort_direction_label %>
+            </span>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </div>
