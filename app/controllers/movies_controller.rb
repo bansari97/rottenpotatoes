@@ -1,9 +1,12 @@
 class MoviesController < ApplicationController
+  SORTABLE_COLUMNS = %w[ title rating release_date ].freeze
+
   before_action :set_movie, only: %i[ show edit update destroy ]
+  helper_method :sort_column, :sort_direction
 
   # GET /movies or /movies.json
   def index
-    @movies = Movie.all
+    @movies = Movie.order(sort_column => sort_direction, id: :asc)
   end
 
   # GET /movies/1 or /movies/1.json
@@ -61,6 +64,15 @@ class MoviesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
       @movie = Movie.find(params.expect(:id))
+    end
+
+    # Only whitelisted columns can be sorted on, so params can't inject SQL.
+    def sort_column
+      SORTABLE_COLUMNS.include?(params[:sort]) ? params[:sort] : "title"
+    end
+
+    def sort_direction
+      %w[ asc desc ].include?(params[:direction]) ? params[:direction] : "asc"
     end
 
     # Only allow a list of trusted parameters through.

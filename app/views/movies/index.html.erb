@@ -1,16 +1,38 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Movies" %>
 
-<h1>Movies</h1>
-
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
+<div class="page-header">
+  <div>
+    <h1>Movies</h1>
+    <p class="subtitle"><%= pluralize(@movies.size, "movie") %> · click a column to sort</p>
+  </div>
+  <%= link_to "Add movie", new_movie_path, class: "button" %>
 </div>
 
-<%= link_to "New movie", new_movie_path %>
+<div class="table-wrap">
+  <table class="movies-table" id="movies">
+    <caption class="visually-hidden">Movies, sorted by <%= sort_column.humanize.downcase %> (<%= sort_direction %>ending)</caption>
+    <thead>
+      <tr>
+        <%= sortable_header "title", "Title" %>
+        <%= sortable_header "rating", "Rating" %>
+        <%= sortable_header "release_date", "Released" %>
+        <th scope="col"><span class="visually-hidden">Actions</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @movies.each do |movie| %>
+        <tr id="<%= dom_id movie %>">
+          <td class="title-cell <%= sorted_class("title") %>"><%= link_to movie.title, movie %></td>
+          <td class="<%= sorted_class("rating") %>"><span class="pill"><%= movie.rating %></span></td>
+          <td class="muted <%= sorted_class("release_date") %>"><%= formatted_release_date(movie) %></td>
+          <td class="actions"><%= link_to "View →", movie, class: "row-link" %></td>
+        </tr>
+      <% end %>
+      <% if @movies.empty? %>
+        <tr>
+          <td colspan="4" class="empty">No movies yet. <%= link_to "Add the first one", new_movie_path %>.</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

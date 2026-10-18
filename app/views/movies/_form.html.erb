@@ -1,6 +1,6 @@
-<%= form_with(model: movie) do |form| %>
+<%= form_with(model: movie, class: "movie-form") do |form| %>
   <% if movie.errors.any? %>
-    <div style="color: red">
+    <div class="form-errors" role="alert">
       <h2><%= pluralize(movie.errors.count, "error") %> prohibited this movie from being saved:</h2>
 
       <ul>
@@ -11,27 +11,30 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, required: true, placeholder: "e.g. Spirited Away" %>
   </div>
 
-  <div>
-    <%= form.label :rating, style: "display: block" %>
-    <%= form.text_field :rating %>
+  <div class="field-row">
+    <div class="field">
+      <%= form.label :rating %>
+      <%= form.select :rating, MoviesHelper::RATINGS, include_blank: "Choose a rating" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :release_date %>
+      <%= form.date_field :release_date, value: movie.release_date&.to_date %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_field :description %>
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description, rows: 5, placeholder: "A short summary of the movie" %>
   </div>
 
-  <div>
-    <%= form.label :release_date, style: "display: block" %>
-    <%= form.text_field :release_date %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="form-actions">
+    <%= form.submit class: "button" %>
+    <%= link_to "Cancel", (movie.persisted? ? movie : movies_path), class: "button button-ghost" %>
   </div>
 <% end %>

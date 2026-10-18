@@ -1,24 +1,16 @@
-# README
+# RottenPotatoes
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails app for browsing, adding, editing, and deleting movies.
 
-Things you may want to cover:
+**Deployed app:** https://rotten-potatoes-hw2-3a0fc4eb29f9.herokuapp.com/
 
-* Ruby version
+## Running locally
 
-* System dependencies
+```sh
+bundle install
+bin/rails db:migrate
+bin/rails db:seed
+bin/rails server
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Then visit http://localhost:3000.

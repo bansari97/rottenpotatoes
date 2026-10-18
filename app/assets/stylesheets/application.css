@@ -1,10 +1,514 @@
 /*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
+ * RottenPotatoes styles. All CSS here is hand-written (no frameworks or templates).
  */
+
+:root {
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --text: #111111;
+  --muted: #6b6b6b;
+  --border: #ececec;
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-soft: #eef0ff;
+  --danger: #dc2626;
+  --danger-soft: #fef2f2;
+  --success: #15803d;
+  --success-soft: #f0fdf4;
+  --radius: 10px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f0f10;
+    --surface: #18181b;
+    --text: #f4f4f5;
+    --muted: #a1a1aa;
+    --border: #27272a;
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-soft: #1e1b3a;
+    --danger: #f87171;
+    --danger-soft: #2a1415;
+    --success: #4ade80;
+    --success-soft: #0f2417;
+    color-scheme: dark;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  font-size: 1.75rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* ---------- Layout ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-nav {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--text);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.brand:hover {
+  color: var(--text);
+}
+
+.brand-mark {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.nav-link {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  color: var(--text);
+}
+
+.container {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.page-header h1 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---------- Flash messages ---------- */
+
+.flash {
+  margin: 0 0 1.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+.flash-notice {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.flash-alert {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 550;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: opacity 0.15s ease, background-color 0.15s ease;
+}
+
+.button:hover {
+  color: var(--bg);
+  opacity: 0.85;
+}
+
+.button-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.button-ghost:hover {
+  color: var(--text);
+  background: var(--surface);
+  opacity: 1;
+}
+
+.button-ghost-danger {
+  background: transparent;
+  color: var(--danger);
+  border-color: var(--border);
+}
+
+.button-ghost-danger:hover {
+  color: var(--danger);
+  background: var(--danger-soft);
+  border-color: var(--danger-soft);
+  opacity: 1;
+}
+
+.actions-bar,
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.actions-bar {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.inline-form {
+  display: inline;
+  margin: 0;
+}
+
+/* ---------- Movies table ---------- */
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.movies-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.movies-table th,
+.movies-table td {
+  padding: 0.85rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.movies-table thead th {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.movies-table tbody tr {
+  transition: background-color 0.12s ease;
+}
+
+.movies-table tbody tr:hover {
+  background: var(--surface);
+}
+
+.title-cell a {
+  color: var(--text);
+  font-weight: 550;
+}
+
+.title-cell a:hover {
+  color: var(--accent);
+}
+
+.sort-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: inherit;
+}
+
+.sort-link:hover {
+  color: var(--text);
+}
+
+.sort-indicator {
+  opacity: 0.35;
+}
+
+/* The currently sorted column: accent header, arrow, and tinted cells. */
+.movies-table thead th.sorted {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.movies-table th.sorted .sort-indicator {
+  opacity: 1;
+}
+
+.movies-table td.sorted {
+  background: var(--accent-soft);
+}
+
+.movies-table .actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.row-link {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.movies-table tr:hover .row-link {
+  color: var(--accent);
+}
+
+.movies-table .empty {
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--muted);
+}
+
+.pill {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Movie details ---------- */
+
+.movie-title {
+  margin-bottom: 1rem;
+  font-size: 2.25rem;
+}
+
+.movie-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin: 0 0 2rem;
+}
+
+.movie-meta dt {
+  margin-bottom: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.movie-meta dd {
+  margin: 0;
+}
+
+.movie-description h2 {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.movie-description p {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+
+/* ---------- Forms ---------- */
+
+.movie-form {
+  max-width: 560px;
+}
+
+.field {
+  margin-bottom: 1.25rem;
+  flex: 1;
+}
+
+.field-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 550;
+}
+
+.field input[type="text"],
+.field input[type="date"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field input[type="text"],
+.field input[type="date"],
+.field select {
+  height: 2.75rem;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.form-actions {
+  margin-top: 0.5rem;
+}
+
+.form-errors {
+  margin-bottom: 1.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.form-errors h2 {
+  margin: 0 0 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.form-errors ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .movie-title {
+    font-size: 1.75rem;
+  }
+
+  .container {
+    padding-top: 1.75rem;
+  }
+
+  .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .movies-table th,
+  .movies-table td {
+    padding: 0.75rem 0.5rem;
+  }
+}

@@ -1,10 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<% content_for :title, @movie.title %>
+
+<%= link_to "← All movies", movies_path, class: "back-link" %>
 
 <%= render @movie %>
 
-<div>
-  <%= link_to "Edit this movie", edit_movie_path(@movie) %> |
-  <%= link_to "Back to movies", movies_path %>
-
-  <%= button_to "Destroy this movie", @movie, method: :delete %>
+<div class="actions-bar">
+  <%= link_to "Edit", edit_movie_path(@movie), class: "button" %>
+  <%= button_to "Delete", @movie, method: :delete, class: "button button-ghost-danger",
+        form: { class: "inline-form", onsubmit: "return confirm('Delete this movie?')" } %>
 </div>

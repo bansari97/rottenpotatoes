@@ -1,22 +1,19 @@
-<div id="<%= dom_id movie %>">
-  <div>
-    <strong>Title:</strong>
-    <%= movie.title %>
-  </div>
+<article id="<%= dom_id movie %>" class="movie">
+  <h1 class="movie-title"><%= movie.title %></h1>
 
-  <div>
-    <strong>Rating:</strong>
-    <%= movie.rating %>
-  </div>
+  <dl class="movie-meta">
+    <div>
+      <dt>Rating</dt>
+      <dd><span class="pill"><%= movie.rating.presence || "—" %></span></dd>
+    </div>
+    <div>
+      <dt>Released</dt>
+      <dd><%= formatted_release_date(movie) || "Unknown" %></dd>
+    </div>
+  </dl>
 
-  <div>
-    <strong>Description:</strong>
-    <%= movie.description %>
-  </div>
-
-  <div>
-    <strong>Release date:</strong>
-    <%= movie.release_date %>
-  </div>
-
-</div>
+  <section class="movie-description">
+    <h2>Description</h2>
+    <p><%= movie.description.presence || "No description yet." %></p>
+  </section>
+</article>
